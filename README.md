@@ -127,11 +127,6 @@ line vty 0 4
   <img src="images/radius/router-ping-nps.png" width="520">
 </p>
 
-| Evidencia | Estado |
-|---|---|
-| Login exitoso con usuario de AD (`images/radius/login-radius.png`) | `[PENDIENTE]` |
-| Login con usuario local / fallback (`images/radius/login-local.png`) | `[PENDIENTE]` |
-
 ---
 
 ## 🛡️ 02 — Cisco ↔ FortiGate VPN
