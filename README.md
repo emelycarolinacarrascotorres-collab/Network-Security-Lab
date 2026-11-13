@@ -364,7 +364,7 @@ Zabbix 7.0.32 monitorea el R1 (`20.25.6.1:161`) con la plantilla *Cisco IOS by S
 
 | # | Requisito | Evidencia | Estado |
 |---|---|---|---|
-| 01 | RADIUS + NPS | `images/radius/` | ⏳ Falta login AD y local |
+| 01 | RADIUS + NPS | `images/radius/` | ✅  |
 | 02 | VPN Cisco ↔ FortiGate | `images/vpn/` | ⏳ Falta GUI FortiGate, túnel y pings |
 | 03 | GitHub | Repository | ✅ |
 | 04 | SNMP Read Only | `images/snmp/` | ✅ (`snmpget` pendiente) |
