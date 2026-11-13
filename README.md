@@ -36,7 +36,7 @@
 
 | Componente | Estado | Nota |
 |---|---|---|
-| 🔐 RADIUS / NPS | 🟡 Parcial | Configuración del router y de NPS/AD documentada. Login con usuario de AD y login local: `[PENDIENTE]` |
+| 🔐 RADIUS / NPS | ✅ Verificado | Configuración del router y de NPS/AD documentada. Login con usuario de AD y login local:  |
 | 🛡️ VPN Cisco ↔ FortiGate | 🟡 Parcial | Configuración del router documentada. GUI FortiGate, túnel UP/DOWN y pings: `[PENDIENTE]` |
 | 📡 SNMP (solo lectura) | ✅ Implementado | Lectura OK y `SET` rechazado (`noAccess`) |
 | 🌐 DHCP | ✅ Implementado | Pool, exclusiones, binding y cliente |
