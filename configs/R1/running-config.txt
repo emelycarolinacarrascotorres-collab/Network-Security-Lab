@@ -1,0 +1,171 @@
+! R1-0697 - show running-config (fuente: captura real del laboratorio)
+! Se redactaron: hashes 'secret 5', clave RADIUS 'key 7' y clave precompartida IPsec.
+Building configuration...
+
+Current configuration : 2825 bytes
+!
+! Last configuration change at 13:58:04 UTC Fri Nov 13 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R1-0697
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 [REDACTADO]
+!
+aaa new-model
+!
+!
+aaa group server radius GRP-NPS
+ server name NPS-0697
+ ip radius source-interface GigabitEthernet1/0.20
+!
+aaa authentication login VTY-AUTH group GRP-NPS local
+aaa authentication login CON-AUTH local
+aaa authorization exec VTY-AUTHZ group GRP-NPS local
+!
+!
+!
+!
+!
+aaa session-id common
+no ip icmp rate-limit unreachable
+!
+!
+!
+ip dhcp excluded-address 20.25.6.1 20.25.6.10
+!
+ip dhcp pool LAN-0697
+ network 20.25.6.0 255.255.255.0
+ default-router 20.25.6.1
+ dns-server 20.25.97.10
+!
+!
+!
+no ip domain lookup
+ip domain name itla.local
+ip cef
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 [REDACTADO]
+!
+!
+!
+!
+!
+ip tcp synwait-time 5
+ip ssh time-out 60
+ip ssh version 2
+!
+!
+crypto isakmp policy 10
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+ lifetime 28800
+crypto isakmp key [REDACTADO] address 20.25.69.2
+!
+!
+crypto ipsec transform-set TS-0697 esp-aes 256 esp-sha256-hmac
+ mode tunnel
+!
+!
+!
+crypto map CMAP-0697 10 ipsec-isakmp
+ set peer 20.25.69.2
+ set transform-set TS-0697
+ set pfs group14
+ match address VPN-ACL
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface GigabitEthernet1/0
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet1/0.10
+ description LAN-USUARIOS
+ encapsulation dot1Q 10
+ ip address 20.25.6.1 255.255.255.0
+!
+interface GigabitEthernet1/0.20
+ description LAN-SERVIDORES
+ encapsulation dot1Q 20
+ ip address 20.25.97.1 255.255.255.0
+!
+interface GigabitEthernet2/0
+ description WAN-HACIA-FORTIGATE
+ ip address 20.25.69.1 255.255.255.252
+ negotiation auto
+ crypto map CMAP-0697
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 20.25.2.0 255.255.255.0 20.25.69.2
+!
+ip access-list standard SNMP-ACL
+ permit 20.25.97.20
+!
+ip access-list extended VPN-ACL
+ permit ip 20.25.6.0 0.0.0.255 20.25.2.0 0.0.0.255
+!
+!
+snmp-server community RoITLA0697 RO SNMP-ACL
+snmp-server location Santo-Domingo-Lab
+snmp-server contact admin@itla.local
+!
+!
+radius server NPS-0697
+ address ipv4 20.25.97.10 auth-port 1812 acct-port 1813
+ timeout 3
+ retransmit 2
+ key 7 [REDACTADO]
+!
+!
+control-plane
+!
+banner login ^CAcceso autorizado solamente^C
+!
+line con 0
+ privilege level 15
+ logging synchronous
+ login authentication CON-AUTH
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ authorization exec VTY-AUTHZ
+ login authentication VTY-AUTH
+ transport input ssh
+!
+!
+end

@@ -1,0 +1,55 @@
+Informe CIS (modo AUDIT) - generado 2026-11-13T10:41:43
+CIS Benchmarks: Cisco IOS y FortiGate (selección de controles)
+>> R1-0697 (20.25.6.1) rol=router
+
+ANTES - cumplimiento: 47.8%
+  [ OK ] MGT-01  Habilitar 'aaa new-model'
+  [FAIL] MGT-02  Definir 'aaa authentication login default'  <- No cumple
+  [ OK ] MGT-03  Usar 'enable secret' (sin 'enable password')
+  [ OK ] MGT-04  Habilitar 'service password-encryption'
+  [ OK ] MGT-05  Usuarios locales con 'secret' (no 'password')
+  [FAIL] MGT-06  exec-timeout <= 10 min en consola  <- No cumple: line con 0
+  [FAIL] MGT-07  exec-timeout <= 10 min en VTY  <- No cumple: line vty 0 4
+  [ OK ] MGT-08  'transport input ssh' en VTY
+  [FAIL] MGT-09  ACL de acceso (access-class) en VTY  <- No cumple: line vty 0 4
+  [ OK ] MGT-10  Configurar 'banner login'
+  [ OK ] MGT-11  Eliminar SNMP communities 'public'/'private'
+  [ OK ] MGT-12  Deshabilitar servidor HTTP ('no ip http server')
+  [ OK ] MGT-13  SSH versión 2
+  [ OK ] MGT-14  'ip ssh time-out' <= 60 s
+  [FAIL] MGT-15  'ip ssh authentication-retries' <= 3  <- Debe ser <= 3 (no configurado)
+  [FAIL] CTL-01  Deshabilitar CDP ('no cdp run')  <- No cumple
+  [FAIL] CTL-02  'no ip bootp server'  <- No cumple
+  [FAIL] CTL-03  'no service pad'  <- No cumple
+  [FAIL] CTL-04  'logging buffered' >= 16384  <- Debe ser >= 16384 (no configurado)
+  [FAIL] CTL-05  Enviar logs a servidor syslog  <- No cumple
+  [ OK ] CTL-06  Timestamps con fecha/hora en logs y debug
+  [FAIL] DAT-01  'no ip source-route'  <- No cumple
+  [FAIL] DAT-02  'no ip proxy-arp' en interfaces L3  <- No cumple: interface GigabitEthernet1/0.10; interface GigabitEthernet1/0.20; interface GigabitEthernet2/0
+
+PASS: 11 | FAIL: 12 | Total: 23
+
+Comandos propuestos por el script (NO aplicados en esta auditoria):
+  aaa authentication login default local
+  line con 0
+   exec-timeout 10 0
+  line vty 0 4
+   exec-timeout 10 0
+  ip access-list standard CIS-VTY-ACL
+   permit 20.25.6.0 0.0.0.255
+   deny any log
+  line vty 0 4
+   access-class CIS-VTY-ACL in
+  ip ssh authentication-retries 3
+  no cdp run
+  no ip bootp server
+  no service pad
+  logging buffered 64000
+  logging host 20.25.97.20
+  no ip source-route
+  interface GigabitEthernet1/0.10
+   no ip proxy-arp
+  interface GigabitEthernet1/0.20
+   no ip proxy-arp
+  interface GigabitEthernet2/0
+   no ip proxy-arp

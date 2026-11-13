@@ -1,0 +1,4 @@
+[PENDIENTE]
+El FortiGate se configuró exclusivamente mediante GUI. Aquí va, como mínimo, la salida de
+"show vpn ipsec-tunnel" / "show full-configuration" si se desea, pero la evidencia principal
+son las capturas de la GUI en images/vpn/. No se ha proporcionado todavía.
